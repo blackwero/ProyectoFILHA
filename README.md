@@ -231,11 +231,9 @@ Este proyecto destaca por:
 
 ## 📈 Mejoras propuestas
 
-* Autenticación con Identity
 * Carrito de compras
 * Órdenes y pagos
 * API REST
-* Paginación y filtros avanzados
 
 ---
 
