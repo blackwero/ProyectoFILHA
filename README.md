@@ -1,251 +1,280 @@
-# 🛍️ Proyecto FILHA - E-commerce de Cosméticos
+# 🛍️ Proyecto FILHA
+
+## E-commerce de Cosméticos – Documentación Técnica
 
 ![.NET](https://img.shields.io/badge/.NET-ASP.NET%20Core-blue)
 ![EF Core](https://img.shields.io/badge/ORM-Entity%20Framework%20Core-green)
 ![SQL Server](https://img.shields.io/badge/Database-SQL%20Server-red)
-![Arquitectura](https://img.shields.io/badge/Arquitectura-MVC-orange)
-
-Sistema web tipo **E-commerce de Cosméticos** desarrollado con **ASP.NET Core MVC**, enfocado en la gestión de productos, clientes y persistencia de datos mediante **Entity Framework Core**.
-
-Este repositorio está diseñado no solo como aplicación funcional, sino también como **referencia académica y técnica** para comprender la implementación de un sistema por capas.
+![Arquitectura](https://img.shields.io/badge/Pattern-MVC-orange)
 
 ---
 
-## 📌 Descripción del sistema
+## 📌 1. Descripción General
 
-**Proyecto FILHA** simula una tienda en línea especializada en cosméticos, donde se administran productos, clientes y su información asociada.
+**Proyecto FILHA** es una aplicación web basada en **ASP.NET Core MVC** que implementa un sistema de tipo **e-commerce enfocado en productos cosméticos**.
 
-El núcleo del sistema gira en torno al modelo:
+El sistema está diseñado bajo una arquitectura en capas, con separación clara entre:
 
-> 💄 **Cosmetico** → entidad principal del dominio
-
-Este modelo concentra la mayor parte de la lógica de negocio relacionada con productos.
-
----
-
-## 🧩 Arquitectura
-
-El sistema implementa el patrón **MVC (Model - View - Controller)**:
-
-| Capa        | Responsabilidad                                   |
-| ----------- | ------------------------------------------------- |
-| Models      | Definición de entidades y reglas de negocio       |
-| Controllers | Manejo de solicitudes HTTP y lógica de aplicación |
-| Views       | Renderizado de la interfaz de usuario             |
-
-Además, se integra:
-
-* **Entity Framework Core (Code First)**
-* **DbContext** para acceso a datos
-* Separación clara de responsabilidades
+* Dominio (Modelos)
+* Aplicación (Controladores)
+* Presentación (Vistas)
+* Persistencia (Entity Framework Core)
 
 ---
 
-## 🧠 Modelos del sistema
+## 🧠 2. Modelo de Dominio
 
-A continuación se describen las entidades principales del sistema junto con su propósito dentro del dominio:
-
----
-
-### 💄 Cosmetico
-
-**Entidad principal del sistema**
-
-Representa un producto cosmético disponible en el catálogo.
-
-**Responsabilidades:**
-
-* Almacenar información del producto
-* Gestionar atributos como precio, stock y categoría
-* Servir como base para operaciones CRUD
-
-**Propiedades típicas:**
-
-* `Id`
-* `Nombre`
-* `Precio`
-* `Stock`
-* `Categoria`
-* `Descripcion`
-* `Imagen (ruta)`
-* `Ingredientes`
+El dominio está centrado en la entidad **Cosmetico**, que representa el núcleo del sistema.
 
 ---
 
-### 👤 Cliente
+### 💄 2.1 Entidad: Cosmetico
 
-Representa a los usuarios registrados en el sistema.
+#### 📍 Descripción
 
-**Responsabilidades:**
+Representa un producto dentro del catálogo del e-commerce.
 
-* Almacenar información del cliente
-* Gestionar estado de cuenta
+#### 📊 Responsabilidad
 
-**Reglas de negocio:**
+* Modelar la información completa del producto
+* Servir como agregado principal del dominio
+* Permitir operaciones CRUD
 
-* `FechaCreacion` → se asigna automáticamente (`DateTime.Now`)
-* `Estado` → activo por defecto (`1`)
+#### 🧾 Estructura (conceptual)
 
----
+```csharp
+public class Cosmetico
+{
+    public int Id { get; set; }
+    public string Nombre { get; set; }
+    public decimal Precio { get; set; }
+    public int Stock { get; set; }
+    public string Categoria { get; set; }
+    public string Descripcion { get; set; }
+    public string RutaImagen { get; set; }
+    public string Ingredientes { get; set; }
+}
+```
 
-### 🏷️ Categoria (si aplica)
+#### ⚙️ Reglas de negocio implícitas
 
-Permite clasificar los cosméticos.
-
-**Responsabilidades:**
-
-* Agrupar productos
-* Facilitar filtrado y organización
-
----
-
-## 🎮 Controladores
-
-Los controladores gestionan la lógica de la aplicación y conectan modelos con vistas.
-
----
-
-### 🧾 CosmeticoController
-
-Controlador principal del sistema.
-
-**Funciones:**
-
-* Listar productos
-* Crear nuevos cosméticos
-* Editar información
-* Eliminar productos
-
-**Relación:**
-
-* Trabaja directamente con el modelo `Cosmetico`
-* Usa Entity Framework para persistencia
+* El precio debe ser mayor a 0
+* El stock no puede ser negativo
+* La categoría define clasificación lógica (no normalizada completamente)
+* La ruta de imagen debe apuntar a un recurso válido en `wwwroot`
 
 ---
 
-### 👤 ClienteController
+### 👤 2.2 Entidad: Cliente
 
-Gestiona el registro y administración de clientes.
+#### 📍 Descripción
 
-**Funciones:**
+Representa a un usuario registrado en la plataforma.
 
-* Registro de usuarios
-* Creación de clientes en base de datos
-* Validación de datos
+#### 🧾 Responsabilidad
 
----
+* Persistir datos del cliente
+* Controlar estado de cuenta
 
-## 🖥️ Vistas (Views)
+#### 🧾 Estructura (conceptual)
 
-Las vistas están construidas con **Razor** y representan la interfaz de usuario.
+```csharp
+public class Cliente
+{
+    public int Id { get; set; }
+    public string Nombre { get; set; }
+    public DateTime FechaCreacion { get; set; }
+    public int Estado { get; set; }
+}
+```
 
----
+#### ⚙️ Reglas de negocio
 
-### Vistas de Cosméticos
-
-* `Index` → Lista de productos
-* `Create` → Formulario de alta
-* `Edit` → Edición de producto
-* `Delete` → Confirmación de eliminación
-
----
-
-### Vistas de Clientes
-
-* `Create` → Registro de cliente
-* `Index` (opcional) → Listado de clientes
+* `FechaCreacion` se asigna automáticamente en el servidor
+* `Estado = 1` indica cliente activo
+* No se permite creación con estado manual
 
 ---
 
-## 🗃️ Acceso a datos
+### 🏷️ 2.3 Entidad: Categoria (opcional)
 
-El proyecto utiliza **Entity Framework Core (Code First)**.
+#### 📍 Descripción
 
-### Componentes clave:
+Entidad auxiliar para clasificación de productos.
 
-* `DbContext` → configuración de entidades
-* `DbSet<T>` → representación de tablas
-* Migraciones → control de cambios en BD
+#### Responsabilidad
+
+* Organizar los cosméticos
+* Permitir escalabilidad en filtros
 
 ---
 
-## 📁 Estructura del proyecto
+## 🗃️ 3. Persistencia de Datos
+
+### 📌 Tecnología
+
+* Entity Framework Core (Code First)
+
+### 📌 Componente principal
+
+```csharp
+public class ApplicationDbContext : DbContext
+{
+    public DbSet<Cosmetico> Cosmeticos { get; set; }
+    public DbSet<Cliente> Clientes { get; set; }
+}
+```
+
+### 🔄 Flujo de persistencia
+
+1. El controlador recibe la solicitud HTTP
+2. Se valida el modelo (`ModelState`)
+3. Se envía la entidad al `DbContext`
+4. EF Core traduce la operación a SQL
+5. Se ejecuta en SQL Server
+
+---
+
+## 🎮 4. Capa de Aplicación (Controladores)
+
+---
+
+### 💄 4.1 CosmeticoController
+
+#### 📍 Responsabilidad
+
+Gestionar el ciclo de vida completo de los productos.
+
+#### 🔧 Acciones principales
+
+| Acción | Método HTTP | Descripción                |
+| ------ | ----------- | -------------------------- |
+| Index  | GET         | Lista todos los cosméticos |
+| Create | GET         | Retorna formulario         |
+| Create | POST        | Inserta nuevo producto     |
+| Edit   | GET         | Obtiene producto           |
+| Edit   | POST        | Actualiza producto         |
+| Delete | GET         | Confirmación               |
+| Delete | POST        | Elimina registro           |
+
+#### 🔄 Flujo interno (Create)
+
+```text
+Request → Controller → Model Binding → Validación → DbContext → SaveChanges()
+```
+
+---
+
+### 👤 4.2 ClienteController
+
+#### 📍 Responsabilidad
+
+Gestionar el registro de usuarios.
+
+#### 🔧 Acciones clave
+
+* Registro de cliente
+* Persistencia en base de datos
+
+#### ⚙️ Lógica crítica
+
+```csharp
+cliente.FechaCreacion = DateTime.Now;
+cliente.Estado = 1;
+```
+
+---
+
+## 🖥️ 5. Capa de Presentación (Views)
+
+Las vistas están desarrolladas con **Razor Pages**.
+
+---
+
+### 📄 Cosmetico Views
+
+| Vista  | Descripción          |
+| ------ | -------------------- |
+| Index  | Listado de productos |
+| Create | Alta de producto     |
+| Edit   | Modificación         |
+| Delete | Confirmación         |
+
+---
+
+### 📄 Cliente Views
+
+| Vista  | Descripción         |
+| ------ | ------------------- |
+| Create | Registro de cliente |
+
+---
+
+## 🔄 6. Flujo de la Aplicación
+
+```text
+Usuario → Vista (Razor) → Controller → Modelo → DbContext → Base de Datos
+```
+
+---
+
+## 🧪 7. Validaciones
+
+* Uso de `ModelState.IsValid`
+* Validaciones mediante Data Annotations (si están implementadas)
+* Control de errores en servidor
+
+---
+
+## 📁 8. Estructura Física
 
 ```bash
 ProyectoFILHA/
 │
 ├── Controllers/
-│   ├── CosmeticoController.cs
-│   └── ClienteController.cs
-│
 ├── Models/
-│   ├── Cosmetico.cs
-│   ├── Cliente.cs
-│   └── Categoria.cs
-│
 ├── Data/
-│   └── ApplicationDbContext.cs
-│
 ├── Views/
-│   ├── Cosmetico/
-│   └── Cliente/
-│
 ├── wwwroot/
 └── Program.cs
 ```
 
 ---
 
-## ⚙️ Ejecución del proyecto
+## 🚀 9. Ejecución
 
 ```bash
-git clone https://github.com/blackwero/ProyectoFILHA.git
-cd ProyectoFILHA
 dotnet ef database update
 dotnet run
 ```
 
 ---
 
-## 🚀 Funcionalidades principales
+## 📈 10. Consideraciones Técnicas
 
-* Gestión de productos cosméticos
-* Registro de clientes
-* Persistencia de datos
-* Arquitectura MVC
-* Separación de capas
-
----
-
-## 🔍 Enfoque técnico
-
-Este proyecto destaca por:
-
-* Implementación de **Code First**
-* Uso de **Entity Framework Core**
-* Modelado de entidades orientado al dominio
-* Aplicación de arquitectura MVC limpia
-* Manejo básico de reglas de negocio
+* Arquitectura monolítica en capas
+* No se implementa aún autenticación
+* Modelo de dominio simple (sin relaciones complejas)
+* Persistencia sin repositorios abstractos (acceso directo a DbContext)
 
 ---
 
-## 📈 Mejoras propuestas
+## 🔮 11. Roadmap Técnico
 
-* Carrito de compras
-* Órdenes y pagos
-* API REST
+* Autenticación con Identity
+* API REST desacoplada
 
 ---
 
 ## 👨‍💻 Autor
 
 **Irving Hernández**
-🔗 https://github.com/blackwero
+GitHub: https://github.com/blackwero
 
 ---
 
 ## 📄 Licencia
 
-Proyecto con fines académicos y demostrativos.
+Uso académico y demostrativo.
 
 ---
