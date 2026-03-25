@@ -1,0 +1,235 @@
+﻿@model IEnumerable<ProyectoFILHA.Models.Entidades.Cosmetico>
+
+<div class="d-flex justify-content-between mb-3">
+    <h2>Administrar Cosméticos</h2>
+
+    <a asp-action="Create" class="btn btn-success">
+        + Nuevo Cosmético
+    </a>
+</div>
+
+<form method="get" class="row g-2 mb-4">
+
+    <div class="col-md-3">
+        <input type="text" name="buscar" value="@ViewBag.Buscar"
+               class="form-control" placeholder="Buscar..." />
+    </div>
+
+
+    <div class="col-md-2">
+        <select name="categoriaId" class="form-select">
+            <option value="">Categoría</option>
+            @foreach (var c in ViewBag.Categorias)
+            {
+                <option value="@c.Id" selected="@(ViewBag.CategoriaId == c.Id)">
+                    @c.Nombre
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <select name="presentacionId" class="form-select">
+            <option value="">Presentación</option>
+            @foreach (var p in ViewBag.Presentaciones)
+            {
+                <option value="@p.Id" selected="@(ViewBag.PresentacionId == p.Id)">
+                    @p.Nombre
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <input type="number" name="precioMin" value="@ViewBag.PrecioMin"
+               class="form-control" placeholder="Precio Min" />
+    </div>
+
+    <div class="col-md-2">
+        <input type="number" name="precioMax" value="@ViewBag.PrecioMax"
+               class="form-control" placeholder="Precio Max" />
+    </div>
+
+    <div class="col-md-2">
+        <select name="estado" class="form-select">
+            <option value="">Estado</option>
+            <option value="1" selected="@(ViewBag.Estado?.ToString() == "Activo")">Activo</option>
+            <option value="0" selected="@(ViewBag.Estado?.ToString() == "Inactivo")">Inactivo</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <select name="esVegano" class="form-select">
+            <option value="">Vegano</option>
+            <option value="1" selected="@(ViewBag.EsVegano == 1)">Sí</option>
+            <option value="0" selected="@(ViewBag.EsVegano == 0)">No</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <select name="esDermatologico" class="form-select">
+            <option value="">Dermatológico</option>
+            <option value="1" selected="@(ViewBag.EsDermatologico == 1)">Sí</option>
+            <option value="0" selected="@(ViewBag.EsDermatologico == 0)">No</option>
+        </select>
+    </div>
+
+    <div class="col-md-2 d-grid">
+        <button class="btn btn-dark">Filtrar</button>
+    </div>
+
+    <div class="col-md-2 d-grid">
+        <a asp-action="AdminIndex" class="btn btn-outline-secondary">Limpiar</a>
+    </div>
+
+</form>
+
+<p class="text-muted">
+    Página @ViewBag.CurrentPage de @ViewBag.TotalPages
+</p>
+
+<table class="table table-bordered table-hover">
+
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Presentación</th>
+            <th>Stock</th>
+            <th>Vegano</th>
+            <th>Dermatológico</th>
+           
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>
+                    @if (item.Estado == ProyectoFILHA.Models.Enums.EstadoEnum.Activo)
+                    {
+                        <span class="badge bg-success">Activo</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inactivo</span>
+                    }
+                </td>
+                <td>$ @item.Precio</td>
+                <td>@item.Categoria?.Nombre</td>
+                <td>@item.Presentacion?.Nombre</td>
+                <td>
+                    @if (item.CantDisponible <= 5)
+                    {
+                        <span class="badge bg-danger">@item.CantDisponible</span>
+                    }
+                    else if (item.CantDisponible <= 15)
+                    {
+                        <span class="badge bg-warning text-dark">@item.CantDisponible</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">@item.CantDisponible</span>
+                    }
+                </td>
+                <td>
+                    @(item.EsVegano == 1 ? "Sí" : "No")
+                </td>
+
+                <td>
+                    @(item.EsDermatologico == 1 ? "Sí" : "No")
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id"
+                       class="btn btn-info btn-sm">👁</a>
+
+                    <a asp-action="Edit" asp-route-id="@item.Id"
+                       class="btn btn-warning btn-sm">✏️</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+
+        <!-- Anterior -->
+        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+            <a class="page-link"
+                   asp-action="AdminIndex"
+                   asp-route-page="@(ViewBag.CurrentPage - 1)"
+                   asp-route-buscar="@ViewBag.Buscar"
+                   asp-route-categoriaId="@ViewBag.CategoriaId"
+                   asp-route-presentacionId="@ViewBag.PresentacionId"
+                   asp-route-precioMin="@ViewBag.PrecioMin"
+                   asp-route-precioMax="@ViewBag.PrecioMax"
+                   asp-route-esVegano="@ViewBag.EsVegano"
+                   asp-route-esDermatologico="@ViewBag.EsDermatologico"
+                   asp-route-estado="@ViewBag.Estado">
+                Anterior
+            </a>
+        </li>
+
+        <!-- Números -->
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link"
+                       asp-action="AdminIndex"
+                       asp-route-page="@i"
+                       asp-route-buscar="@ViewBag.Buscar"
+                       asp-route-categoriaId="@ViewBag.CategoriaId"
+                       asp-route-presentacionId="@ViewBag.PresentacionId"
+                       asp-route-precioMin="@ViewBag.PrecioMin"
+                       asp-route-precioMax="@ViewBag.PrecioMax"
+                       asp-route-esVegano="@ViewBag.EsVegano"
+                       asp-route-esDermatologico="@ViewBag.EsDermatologico"
+                       asp-route-estado="@ViewBag.Estado">
+                    @i
+                </a>
+            </li>
+        }
+
+        <!-- Siguiente -->
+        <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link"
+                   asp-action="AdminIndex"
+                   asp-route-page="@(ViewBag.CurrentPage + 1)"
+                   asp-route-buscar="@ViewBag.Buscar"
+                   asp-route-categoriaId="@ViewBag.CategoriaId"
+                   asp-route-presentacionId="@ViewBag.PresentacionId"
+                   asp-route-precioMin="@ViewBag.PrecioMin"
+                   asp-route-precioMax="@ViewBag.PrecioMax"
+                   asp-route-esVegano="@ViewBag.EsVegano"
+                   asp-route-esDermatologico="@ViewBag.EsDermatologico"
+                   asp-route-estado="@ViewBag.Estado">
+                Siguiente
+            </a>
+        </li>
+
+    </ul>
+</nav>
+
+
+@section Scripts {
+    <script>
+        const input = document.querySelector('input[name="buscar"]');
+
+        if (input) {
+            input.addEventListener('keyup', function () {
+                clearTimeout(this.delay);
+
+                this.delay = setTimeout(() => {
+                    this.form.submit();
+                }, 400);
+            });
+        }
+    </script>
+}

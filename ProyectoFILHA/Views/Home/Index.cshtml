@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="text-center mt-5">
+    <h1 class="mb-4">Bienvenido a FILHA Cosmetics 💄</h1>
+    <p class="mb-5">Selecciona cómo deseas ingresar</p>
+
+    <div class="row justify-content-center">
+
+        <!-- Cliente -->
+        <div class="col-md-4">
+            <div class="card shadow p-4">
+                <h3>Cliente</h3>
+                <p>Explora productos y realiza compras</p>
+                <a asp-controller="Clientes" asp-action="Index" class="btn btn-dark">
+                    Entrar como Cliente
+                </a>
+            </div>
+        </div>
+
+        <!-- Admin -->
+        <div class="col-md-4">
+            <div class="card shadow p-4">
+                <h3>Administrador</h3>
+                <p>Gestiona productos y pedidos</p>
+                <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-dark">
+                    Entrar como Admin
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>

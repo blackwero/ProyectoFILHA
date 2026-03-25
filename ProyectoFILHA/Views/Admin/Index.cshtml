@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Panel Administrador";
+}
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-5">Panel de Administración ⚙️</h1>
+
+    <div class="row">
+
+        <!-- Cosméticos -->
+        <div class="col-md-4">
+            <div class="card shadow p-4 text-center">
+                <h4>Cosméticos</h4>
+                <p>Gestionar productos</p>
+
+                <a asp-controller="Cosmeticos" asp-action="AdminIndex"
+                       class="btn btn-dark">
+                    Administrar
+                </a>
+            </div>
+        </div>
+
+        <!-- Categorías -->
+        <div class="col-md-4">
+            <div class="card shadow p-4 text-center">
+                <h4>Categorías</h4>
+                <p>Gestionar categorías</p>
+
+                <a asp-controller="Categorias" asp-action="Index"
+                       class="btn btn-outline-dark">
+                    Administrar
+                </a>
+            </div>
+        </div>
+        <!-- Presentaciones -->
+        <div class="col-md-4">
+            <div class="card shadow p-4 text-center">
+                <h4>Presentaciones</h4>
+                <p>Gestionar presentaciones</p>
+
+                <a asp-controller="Presentaciones" asp-action="Index"
+                       class="btn btn-outline-dark">
+                    Administrar
+                </a>
+            </div>
+        </div>
+
+        <!-- Pedidos -->
+        <div class="col-md-4">
+            <div class="card shadow p-4 text-center">
+                <h4>Pedidos</h4>
+                <p>Ver pedidos realizados</p>
+
+                <a asp-controller="Pedidos" asp-action="Index"
+                       class="btn btn-outline-dark">
+                    Ver pedidos
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FILHA Cosmetics</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container-fluid">
+
+                <!-- Logo -->
+                <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+                    💄 FILHA Cosmetics
+                </a>
+
+                <!-- Botón responsive -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Menú -->
+                <div class="collapse navbar-collapse" id="navbarMain">
+
+                    <!-- Izquierda -->
+                    <ul class="navbar-nav me-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Cosmeticos" asp-action="Index">Productos</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Categorias" asp-action="Index">Categorías</a>
+                        </li>
+
+                    </ul>
+
+                    <!-- Derecha -->
+                    <ul class="navbar-nav">
+
+                        <!-- Carrito -->
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" asp-controller="Carrito" asp-action="Index">
+                                🛒 Carrito
+                                <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                                    0
+                                </span>
+                            </a>
+                        </li>
+
+                        <!-- Usuario -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Cliente" asp-action="Login">
+                                👤 Mi cuenta
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido -->
+    <div class="container mt-4">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center p-3 mt-5">
+        <div class="container">
+            <small>
+                © 2026 FILHA Cosmetics | Belleza con propósito 🌿
+            </small>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

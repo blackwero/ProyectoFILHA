@@ -1,0 +1,23 @@
+﻿@model ProyectoFILHA.Models.Entidades.Presentacion
+@using ProyectoFILHA.Models.Enums
+
+<h2>Nueva Presentación</h2>
+
+<form asp-action="Create">
+
+    <div class="mb-3">
+        <label>Nombre</label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Estado</label>
+        <select asp-for="Estado" class="form-control"
+                asp-items="Html.GetEnumSelectList<EstadoEnum>()">
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+
+</form>

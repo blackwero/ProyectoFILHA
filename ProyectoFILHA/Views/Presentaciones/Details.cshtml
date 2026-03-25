@@ -1,0 +1,38 @@
+﻿@model ProyectoFILHA.Models.Entidades.Presentacion
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Detalle de Presentación</h2>
+
+    <div class="card shadow p-4">
+
+        <div class="mb-3">
+            <strong>Nombre:</strong>
+            <p>@Model.Nombre</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Estado:</strong>
+            @if (Model.Estado == ProyectoFILHA.Models.Enums.EstadoEnum.Activo)
+            {
+                <span class="badge bg-success">Activo</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Inactivo</span>
+            }
+        </div>
+
+        <div class="mb-3">
+            <strong>Fecha Creación:</strong>
+            <p>@Model.FechaCreacion?.ToString("dd/MM/yyyy")</p>
+        </div>
+
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+    </div>
+
+</div>
