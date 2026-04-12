@@ -47,6 +47,38 @@ namespace ProyectoFILHA.Controllers.Api
 
             return CreatedAtAction(nameof(GetCosmetico), new { id = cosmetico.Id }, cosmetico);
         }
+
+
+        // PUT: api/cosmeticos/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCosmetico(int id, Cosmetico cosmetico)
+        {
+            if (id != cosmetico.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(cosmetico).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Cosmeticos.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
     }
 
 }

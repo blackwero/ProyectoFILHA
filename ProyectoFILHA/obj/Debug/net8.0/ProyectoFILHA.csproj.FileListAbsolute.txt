@@ -254,3 +254,4 @@ C:\Users\LudoCorrupted\source\repos\ProyectoFinal\ProyectoFILHA\ProyectoFILHA\bi
 C:\Users\LudoCorrupted\source\repos\ProyectoFinal\ProyectoFILHA\ProyectoFILHA\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
 C:\Users\LudoCorrupted\source\repos\ProyectoFinal\ProyectoFILHA\ProyectoFILHA\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
 C:\Users\LudoCorrupted\source\repos\ProyectoFinal\ProyectoFILHA\ProyectoFILHA\obj\Debug\net8.0\ProyectoFILHA.sourcelink.json
+C:\Users\LudoCorrupted\source\repos\ProyectoFinal\ProyectoFILHA\ProyectoFILHA\bin\Debug\net8.0\Controllers\Postman\ProyectoFILHA API.postman_collection.json
