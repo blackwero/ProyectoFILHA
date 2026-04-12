@@ -1,3 +1,5 @@
+
+
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoFILHA.Controllers.Api
@@ -20,4 +22,5 @@ namespace ProyectoFILHA.Controllers.Api
             return Ok(categorias);
         }
     }
+
 }

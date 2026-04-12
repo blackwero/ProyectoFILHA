@@ -1,3 +1,4 @@
+
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFILHA.Models;
@@ -47,4 +48,5 @@ namespace ProyectoFILHA.Controllers.Api
             return CreatedAtAction(nameof(GetCosmetico), new { id = cosmetico.Id }, cosmetico);
         }
     }
+
 }
