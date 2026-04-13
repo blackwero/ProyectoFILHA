@@ -3,6 +3,7 @@ using ProyectoFILHA.Models.Entidades;
 
 namespace ProyectoFILHA.Models
 {
+
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -20,6 +21,7 @@ namespace ProyectoFILHA.Models
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<CarritoCompras> CarritosCompras { get; set; }
         public DbSet<CarritoPedidoCosmetico> CarritoPedidoCosmeticos { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

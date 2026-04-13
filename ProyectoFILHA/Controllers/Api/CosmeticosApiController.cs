@@ -3,9 +3,13 @@
 using Microsoft.EntityFrameworkCore;
 using ProyectoFILHA.Models;
 using ProyectoFILHA.Models.Entidades;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace ProyectoFILHA.Controllers.Api
 {
+
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CosmeticosApiController : ControllerBase
