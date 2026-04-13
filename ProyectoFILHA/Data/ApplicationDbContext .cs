@@ -21,7 +21,8 @@ namespace ProyectoFILHA.Models
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<CarritoCompras> CarritosCompras { get; set; }
         public DbSet<CarritoPedidoCosmetico> CarritoPedidoCosmeticos { get; set; }
-
+        public DbSet<UsuarioApi> UsuariosApi { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

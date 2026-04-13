@@ -53,7 +53,6 @@ var ConectionString = builder.Configuration.GetConnectionString("DefaultConnecti
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(ConectionString));
 
-//builder.Services.AddSession();
 
 // Loggin Api
 var key = builder.Configuration["Jwt:Key"];
@@ -73,6 +72,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+// Logger
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
 var app = builder.Build();
 
 // Pipeline
@@ -82,6 +86,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseAuthentication();
     app.UseAuthorization();
+    app.UseMiddleware<LoggingMiddleware>();
 }
 else
 {
@@ -90,16 +95,13 @@ else
 
 
 
-//app.UseSession();
+
 
 app.UseStaticFiles();
-
 app.UseHttpsRedirection();
-
 app.UseRouting();
-
 app.UseAuthorization();
-
+app.UseMiddleware<LoggingMiddleware>();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
