@@ -207,6 +207,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "DragonBallApiController",
+    "Method": "GetPersonajes",
+    "RelativePath": "api/DragonBallApi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "LogsApiController",
     "Method": "GetLogs",
     "RelativePath": "api/LogsApi",
@@ -256,5 +266,15 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "TriviaApiController",
+    "Method": "GetPreguntas",
+    "RelativePath": "api/TriviaApi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

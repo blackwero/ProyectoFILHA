@@ -14,34 +14,24 @@ public class AuthController : ControllerBase
     private readonly ApplicationDbContext _context;
     private readonly IConfiguration _config;
     private readonly ILogger<AuthController> _logger;
+    private readonly ILogService _logService;
 
-    public AuthController(ApplicationDbContext context, IConfiguration config, ILogger<AuthController> logger)
+    public AuthController(ApplicationDbContext context, IConfiguration config, ILogger<AuthController> logger, ILogService logService)
     {
         _context = context;
         _config = config;
         _logger = logger;
+        _logService = logService;
     }
 
-    private async Task GuardarLog(string nivel, string mensaje, string? usuario = null)
-    {
-        var log = new Log
-        {
-            Nivel = nivel,
-            Mensaje = mensaje,
-            Fecha = DateTime.Now,
-            Usuario = usuario
-        };
-
-        _context.Logs.Add(log);
-        await _context.SaveChangesAsync();
-    }
+  
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(string correo, string password)
     {
         // 🪵 LOG (consola + BD)
         _logger.LogInformation("Intento de login con correo: {correo}", correo);
-        await GuardarLog("INFO", "Intento de login", correo);
+        await _logService.GuardarLog("INFO", "Intento de login", correo);
 
         var user = await _context.UsuariosApi
             .FirstOrDefaultAsync(u => u.Correo == correo);
@@ -49,7 +39,7 @@ public class AuthController : ControllerBase
         if (user == null)
         {
             _logger.LogWarning("Usuario no encontrado: {correo}", correo);
-            await GuardarLog("WARNING", "Usuario no encontrado", correo);
+            await _logService.GuardarLog("WARNING", "Usuario no encontrado", correo);
 
             return Unauthorized("Credenciales incorrectas");
         }
@@ -57,13 +47,13 @@ public class AuthController : ControllerBase
         if (user.Password != password)
         {
             _logger.LogWarning("Password incorrecto para: {correo}", correo);
-            await GuardarLog("WARNING", "Password incorrecto", correo);
+            await _logService.GuardarLog("WARNING", "Password incorrecto", correo);
 
             return Unauthorized("Credenciales incorrectas");
         }
 
         _logger.LogInformation("Login exitoso para: {correo}", correo);
-        await GuardarLog("INFO", "Login exitoso", correo);
+        await _logService.GuardarLog("INFO", "Login exitoso", correo);
 
         var key = _config["Jwt:Key"];
 

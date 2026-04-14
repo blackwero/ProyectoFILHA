@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProyectoFILHA.Models;
+using ProyectoFILHA.Services.Interfaces;
 using System.Text;
 
 
@@ -71,11 +72,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
-
-// Logger
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
+builder.Services.AddScoped<ILogService, LogService>();
+builder.Services.AddHttpClient<ITriviaService, TriviaService>();
+builder.Services.AddHttpClient<IDragonBallService, DragonBallService>();
 
 var app = builder.Build();
 
