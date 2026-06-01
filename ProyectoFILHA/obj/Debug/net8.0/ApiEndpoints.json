@@ -30,7 +30,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFILHA.Models.Entidades.Categoria, ProyectoFILHA, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFILHA.Models.Entidades.CategoriaViewModel, ProyectoFILHA, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -50,13 +50,13 @@
     "Parameters": [
       {
         "Name": "categoria",
-        "Type": "ProyectoFILHA.Models.Entidades.Categoria",
+        "Type": "ProyectoFILHA.Models.Entidades.CategoriaViewModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ProyectoFILHA.Models.Entidades.Categoria",
+        "Type": "ProyectoFILHA.Models.Entidades.CategoriaViewModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -82,7 +82,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ProyectoFILHA.Models.Entidades.Categoria",
+        "Type": "ProyectoFILHA.Models.Entidades.CategoriaViewModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -107,7 +107,7 @@
       },
       {
         "Name": "categoria",
-        "Type": "ProyectoFILHA.Models.Entidades.Categoria",
+        "Type": "ProyectoFILHA.Models.Entidades.CategoriaViewModel",
         "IsRequired": true
       }
     ],
@@ -123,7 +123,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFILHA.Models.Entidades.Cosmetico, ProyectoFILHA, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFILHA.Models.Entidades.CosmeticoViewModel, ProyectoFILHA, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -143,13 +143,13 @@
     "Parameters": [
       {
         "Name": "cosmetico",
-        "Type": "ProyectoFILHA.Models.Entidades.Cosmetico",
+        "Type": "ProyectoFILHA.Models.Entidades.CosmeticoViewModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ProyectoFILHA.Models.Entidades.Cosmetico",
+        "Type": "ProyectoFILHA.Models.Entidades.CosmeticoViewModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -175,7 +175,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ProyectoFILHA.Models.Entidades.Cosmetico",
+        "Type": "ProyectoFILHA.Models.Entidades.CosmeticoViewModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -200,7 +200,7 @@
       },
       {
         "Name": "cosmetico",
-        "Type": "ProyectoFILHA.Models.Entidades.Cosmetico",
+        "Type": "ProyectoFILHA.Models.Entidades.CosmeticoViewModel",
         "IsRequired": true
       }
     ],

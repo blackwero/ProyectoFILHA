@@ -23,14 +23,14 @@ namespace ProyectoFILHA.Controllers.Api
 
         // GET: api/cosmeticos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cosmetico>>> GetCosmeticos()
+        public async Task<ActionResult<IEnumerable<CosmeticoViewModel>>> GetCosmeticos()
         {
             return await _context.Cosmeticos.ToListAsync();
         }
 
         // GET: api/cosmeticos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cosmetico>> GetCosmetico(int id)
+        public async Task<ActionResult<CosmeticoViewModel>> GetCosmetico(int id)
         {
             var cosmetico = await _context.Cosmeticos.FindAsync(id);
 
@@ -44,7 +44,7 @@ namespace ProyectoFILHA.Controllers.Api
 
         // POST: api/cosmeticos
         [HttpPost]
-        public async Task<ActionResult<Cosmetico>> CreateCosmetico(Cosmetico cosmetico)
+        public async Task<ActionResult<CosmeticoViewModel>> CreateCosmetico(CosmeticoViewModel cosmetico)
         {
             _context.Cosmeticos.Add(cosmetico);
             await _context.SaveChangesAsync();
@@ -55,7 +55,7 @@ namespace ProyectoFILHA.Controllers.Api
 
         // PUT: api/cosmeticos/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCosmetico(int id, Cosmetico cosmetico)
+        public async Task<IActionResult> UpdateCosmetico(int id, CosmeticoViewModel cosmetico)
         {
             if (id != cosmetico.Id)
             {

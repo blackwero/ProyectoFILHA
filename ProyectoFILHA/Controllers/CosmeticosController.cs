@@ -1,100 +1,121 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ProyectoFILHA.Models;
 using ProyectoFILHA.Models.Entidades;
 using ProyectoFILHA.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ProyectoFILHA.Services;
 
 namespace ProyectoFILHA.Controllers
 {
     public class CosmeticosController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly CosmeticoService _cosmeticoService;
+        private readonly CategoriaService _categoriaService;
+        private readonly PresentacionService _presentacionService;
+
+        public CosmeticosController(
+            CosmeticoService cosmeticoService,
+            CategoriaService categoriaService,
+            PresentacionService presentacionService)
+        {
+            _cosmeticoService = cosmeticoService;
+            _categoriaService = categoriaService;
+            _presentacionService = presentacionService;
+        }
 
         private async Task CargarCombos()
         {
+            var categorias =
+                await _categoriaService.ObtenerTodos();
+
+            var presentaciones =
+                await _presentacionService.ObtenerTodos();
+
             ViewBag.Categorias = new SelectList(
-                await _context.Categorias
-                    .Where(c => c.Estado == EstadoEnum.Activo)
-                    .ToListAsync(),
+                categorias.Where(c => c.Estado == EstadoEnum.Activo),
                 "Id",
-                "Nombre"
-            );
+                "Nombre");
 
             ViewBag.Presentaciones = new SelectList(
-                await _context.Presentaciones
-                    .Where(p => p.Estado == EstadoEnum.Activo)
-                    .ToListAsync(),
+                presentaciones.Where(p => p.Estado == EstadoEnum.Activo),
                 "Id",
-                "Nombre"
-            );
-        }
-        public CosmeticosController(ApplicationDbContext context)
-        {
-            _context = context;
+                "Nombre");
         }
 
-        // GET: Cosmeticoes
         public async Task<IActionResult> AdminIndex(
-     string buscar,
-     int? categoriaId,
-     int? presentacionId,
-     decimal? precioMin,
-     decimal? precioMax,
-     int? esVegano,
-     int? esDermatologico,
-     EstadoEnum? estado,
-     int page = 1)
+            string buscar,
+            int? categoriaId,
+            int? presentacionId,
+            decimal? precioMin,
+            decimal? precioMax,
+            int? esVegano,
+            int? esDermatologico,
+            EstadoEnum? estado,
+            int page = 1)
         {
             int pageSize = 10;
 
-            var query = _context.Cosmeticos
-                .Include(c => c.Categoria)
-                .Include(c => c.Presentacion)
-                .AsQueryable();
+            var lista =
+                await _cosmeticoService.ObtenerTodos();
 
             if (!string.IsNullOrEmpty(buscar))
-                query = query.Where(c => c.Nombre.Contains(buscar));
-
-            if (categoriaId.HasValue)
-                query = query.Where(c => c.CategoriaId == categoriaId);
-
-            if (presentacionId.HasValue)
-                query = query.Where(c => c.PresentacionId == presentacionId);
-
-            if (precioMin.HasValue)
-                query = query.Where(c => c.Precio >= precioMin);
-
-            if (precioMax.HasValue)
-                query = query.Where(c => c.Precio <= precioMax);
-
-            if (esVegano.HasValue)
-                query = query.Where(c => c.EsVegano == esVegano);
-
-            if (esDermatologico.HasValue)
-                query = query.Where(c => c.EsDermatologico == esDermatologico);
-            if (estado.HasValue)
             {
-                query = query.Where(c => c.Estado == estado);
+                lista = lista
+                    .Where(c => c.Nombre != null &&
+                           c.Nombre.Contains(
+                               buscar,
+                               StringComparison.OrdinalIgnoreCase))
+                    .ToList();
             }
 
-            int totalItems = await query.CountAsync();
+            if (categoriaId.HasValue)
+                lista = lista
+                    .Where(c => c.CategoriaId == categoriaId)
+                    .ToList();
 
-            var lista = await query
+            if (presentacionId.HasValue)
+                lista = lista
+                    .Where(c => c.PresentacionId == presentacionId)
+                    .ToList();
+
+            if (precioMin.HasValue)
+                lista = lista
+                    .Where(c => c.Precio >= precioMin)
+                    .ToList();
+
+            if (precioMax.HasValue)
+                lista = lista
+                    .Where(c => c.Precio <= precioMax)
+                    .ToList();
+
+            if (esVegano.HasValue)
+                lista = lista
+                    .Where(c => c.EsVegano == esVegano)
+                    .ToList();
+
+            if (esDermatologico.HasValue)
+                lista = lista
+                    .Where(c => c.EsDermatologico == esDermatologico)
+                    .ToList();
+
+            if (estado.HasValue)
+                lista = lista
+                    .Where(c => c.Estado == estado.Value)
+                    .ToList();
+
+            int totalItems = lista.Count;
+
+            lista = lista
                 .OrderBy(c => c.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .ToListAsync();
+                .ToList();
 
-            // Dropdowns
-            ViewBag.Categorias = await _context.Categorias.ToListAsync();
-            ViewBag.Presentaciones = await _context.Presentaciones.ToListAsync();
+            ViewBag.Categorias =
+                await _categoriaService.ObtenerTodos();
 
-            // Filtros
+            ViewBag.Presentaciones =
+                await _presentacionService.ObtenerTodos();
+
             ViewBag.Buscar = buscar;
             ViewBag.CategoriaId = categoriaId;
             ViewBag.PresentacionId = presentacionId;
@@ -104,12 +125,9 @@ namespace ProyectoFILHA.Controllers
             ViewBag.EsDermatologico = esDermatologico;
             ViewBag.Estado = estado;
 
-            // Paginación
             ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
-
-
-
+            ViewBag.TotalPages =
+                (int)Math.Ceiling((double)totalItems / pageSize);
 
             return View(lista);
         }
@@ -117,40 +135,30 @@ namespace ProyectoFILHA.Controllers
         public async Task<IActionResult> Create()
         {
             await CargarCombos();
+
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Cosmetico cosmetico)
+        public async Task<IActionResult> Create(
+            CosmeticoViewModel? cosmetico)
         {
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                cosmetico.FechaCreacion = DateTime.Now;
-                _context.Add(cosmetico);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(AdminIndex));
+                await CargarCombos();
+                return View(cosmetico);
             }
 
-            bool categoriaValida = await _context.Categorias
-                .AnyAsync(c => c.Id == cosmetico.CategoriaId && c.Estado == EstadoEnum.Activo);
+            await _cosmeticoService.Crear(cosmetico);
 
-            bool presentacionValida = await _context.Presentaciones
-                .AnyAsync(p => p.Id == cosmetico.PresentacionId && p.Estado == EstadoEnum.Activo);
-
-            if (!categoriaValida)
-                ModelState.AddModelError("CategoriaId", "Categoría no válida");
-
-            if (!presentacionValida)
-                ModelState.AddModelError("PresentacionId", "Presentación no válida");
-            await CargarCombos();
-
-            return View(cosmetico);
+            return RedirectToAction(nameof(AdminIndex));
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            var cosmetico = await _context.Cosmeticos.FindAsync(id);
+            var cosmetico =
+                await _cosmeticoService.ObtenerPorId(id);
+
             if (cosmetico == null)
                 return NotFound();
 
@@ -158,57 +166,27 @@ namespace ProyectoFILHA.Controllers
 
             return View(cosmetico);
         }
-        //cambio
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Cosmetico cosmetico)
+        public async Task<IActionResult> Edit(
+            int id,
+            CosmeticoViewModel cosmetico)
         {
             if (id != cosmetico.Id)
                 return NotFound();
 
-            var cosmeticoDb = await _context.Cosmeticos.FindAsync(id);
-            if (cosmeticoDb == null)
-                return NotFound();
-
-            // 🔒 Validar relaciones activas
-            bool categoriaValida = await _context.Categorias
-                .AnyAsync(c => c.Id == cosmetico.CategoriaId && c.Estado == EstadoEnum.Activo);
-
-            bool presentacionValida = await _context.Presentaciones
-                .AnyAsync(p => p.Id == cosmetico.PresentacionId && p.Estado == EstadoEnum.Activo);
-
-            if (!categoriaValida)
-                ModelState.AddModelError("CategoriaId", "La categoría seleccionada no está activa");
-
-            if (!presentacionValida)
-                ModelState.AddModelError("PresentacionId", "La presentación seleccionada no está activa");
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // 🔥 Actualización controlada
-                cosmeticoDb.Nombre = cosmetico.Nombre;
-                cosmeticoDb.Precio = cosmetico.Precio;
-                cosmeticoDb.CantDisponible = cosmetico.CantDisponible;
-                cosmeticoDb.CategoriaId = cosmetico.CategoriaId;
-                cosmeticoDb.PresentacionId = cosmetico.PresentacionId;
-                cosmeticoDb.Descripcion = cosmetico.Descripcion;
-                cosmeticoDb.EsVegano = cosmetico.EsVegano;
-                cosmeticoDb.EsDermatologico = cosmetico.EsDermatologico;
-                cosmeticoDb.Estado = cosmetico.Estado;
-
-                // ❌ NO tocar FechaCreacion
-
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(AdminIndex));
+                await CargarCombos();
+                return View(cosmetico);
             }
 
-            // 🔁 Recargar combos si falla
-            await CargarCombos();
+            await _cosmeticoService.Actualizar(
+                id,
+                cosmetico);
 
-            return View(cosmetico);
+            return RedirectToAction(nameof(AdminIndex));
         }
-
     }
 }

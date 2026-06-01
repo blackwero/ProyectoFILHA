@@ -24,14 +24,14 @@ namespace ProyectoFILHA.Controllers.Api
 
         // GET: api/categorias
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Categoria>>> GetCategorias()
+        public async Task<ActionResult<IEnumerable<CategoriaViewModel>>> GetCategorias()
         {
             return await _context.Categorias.ToListAsync();
         }
 
         // GET: api/categorias/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Categoria>> GetCategoria(int id)
+        public async Task<ActionResult<CategoriaViewModel>> GetCategoria(int id)
         {
             var categoria = await _context.Categorias.FindAsync(id);
 
@@ -43,7 +43,7 @@ namespace ProyectoFILHA.Controllers.Api
 
         // POST: api/categorias
         [HttpPost]
-        public async Task<ActionResult<Categoria>> CreateCategoria(Categoria categoria)
+        public async Task<ActionResult<CategoriaViewModel>> CreateCategoria(CategoriaViewModel categoria)
         {
             categoria.FechaCreacion = DateTime.Now;
             categoria.Estado = EstadoEnum.Activo; // 👈 importante
@@ -56,7 +56,7 @@ namespace ProyectoFILHA.Controllers.Api
 
         // PUT: api/categorias/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategoria(int id, Categoria categoria)
+        public async Task<IActionResult> UpdateCategoria(int id, CategoriaViewModel categoria)
         {
             if (id != categoria.Id)
                 return BadRequest();

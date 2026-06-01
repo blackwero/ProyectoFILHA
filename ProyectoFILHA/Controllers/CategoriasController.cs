@@ -1,52 +1,62 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ProyectoFILHA.Models;
 using ProyectoFILHA.Models.Entidades;
 using ProyectoFILHA.Models.Enums;
+using ProyectoFILHA.Services;
 
 public class CategoriasController : Controller
 {
-    private readonly ApplicationDbContext _context;
+    private readonly CategoriaService _service;
 
-    public CategoriasController(ApplicationDbContext context)
+    public CategoriasController(
+        CategoriaService service)
     {
-        _context = context;
+        _service = service;
     }
 
-    // LISTADO + FILTROS
-    public async Task<IActionResult> Index(string buscar, EstadoEnum? estado, int page = 1)
+    // LISTADO + FILTROS + PAGINACIÓN
+    public async Task<IActionResult> Index(
+        string buscar,
+        EstadoEnum? estado,
+        int page = 1)
     {
         int pageSize = 10;
 
-        var query = _context.Categorias.AsQueryable();
+        var lista = await _service.ObtenerTodos();
 
         if (!string.IsNullOrEmpty(buscar))
         {
-            query = query.Where(c => c.Nombre.Contains(buscar));
+            lista = lista
+                .Where(c =>
+                    c.Nombre != null &&
+                    c.Nombre.Contains(
+                        buscar,
+                        StringComparison.OrdinalIgnoreCase))
+                .ToList();
         }
 
         if (estado.HasValue)
         {
-            query = query.Where(c => c.Estado == estado);
+            lista = lista
+                .Where(c => c.Estado == estado.Value)
+                .ToList();
         }
 
-        int totalItems = await query.CountAsync();
+        int totalItems = lista.Count();
 
-        var lista = await query
-            .OrderBy(c => c.Id)
+        lista = lista
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .ToListAsync();
+            .ToList();
 
         ViewBag.CurrentPage = page;
-        ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+        ViewBag.TotalPages =
+            (int)Math.Ceiling((double)totalItems / pageSize);
 
         ViewBag.Buscar = buscar;
         ViewBag.Estado = estado;
 
         return View(lista);
     }
-
 
     // GET: Create
     public IActionResult Create()
@@ -57,23 +67,25 @@ public class CategoriasController : Controller
     // POST: Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Categoria categoria)
+    public async Task<IActionResult> Create(
+        CategoriaViewModel categoria)
     {
-        if (ModelState.IsValid)
-        {
-            categoria.FechaCreacion = DateTime.Now;
-            _context.Add(categoria);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(categoria);
+        if (!ModelState.IsValid)
+            return View(categoria);
+
+        await _service.Crear(categoria);
+
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: Edit
     public async Task<IActionResult> Edit(int id)
     {
-        var categoria = await _context.Categorias.FindAsync(id);
-        if (categoria == null) return NotFound();
+        var categoria =
+            await _service.ObtenerPorId(id);
+
+        if (categoria == null)
+            return NotFound();
 
         return View(categoria);
     }
@@ -81,36 +93,52 @@ public class CategoriasController : Controller
     // POST: Edit
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Categoria categoria)
+    public async Task<IActionResult> Edit(
+        int id,
+        CategoriaViewModel categoria)
     {
-        if (id != categoria.Id) return NotFound();
+        if (id != categoria.Id)
+            return NotFound();
 
-        var categoriaDb = await _context.Categorias.FindAsync(id);
-        if (categoriaDb == null) return NotFound();
+        if (!ModelState.IsValid)
+            return View(categoria);
 
-        if (ModelState.IsValid)
-        {
-            // Solo actualizamos lo necesario
-            categoriaDb.Nombre = categoria.Nombre;
-            categoriaDb.Estado = categoria.Estado;
+        await _service.Actualizar(id, categoria);
 
-            // NO tocamos FechaCreacion
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        return View(categoria);
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: Details
     public async Task<IActionResult> Details(int id)
     {
-        var categoria = await _context.Categorias.FindAsync(id);
-        if (categoria == null) return NotFound();
+        var categoria =
+            await _service.ObtenerPorId(id);
+
+        if (categoria == null)
+            return NotFound();
 
         return View(categoria);
     }
 
+    // GET: Delete
+    public async Task<IActionResult> Delete(int id)
+    {
+        var categoria =
+            await _service.ObtenerPorId(id);
 
+        if (categoria == null)
+            return NotFound();
+
+        return View(categoria);
+    }
+
+    // POST: Delete
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        await _service.Eliminar(id);
+
+        return RedirectToAction(nameof(Index));
+    }
 }

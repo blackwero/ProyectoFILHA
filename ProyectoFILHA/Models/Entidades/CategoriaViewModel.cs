@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class Categoria
+    public class CategoriaViewModel
     {
         public int Id { get; set; }
 
@@ -17,6 +17,6 @@
         public EstadoEnum Estado { get; set; }
 
         // Relación
-        public List<Cosmetico>? Cosmeticos { get; set; }
+        public List<CosmeticoViewModel>? Cosmeticos { get; set; }
     }
 }

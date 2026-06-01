@@ -1,109 +1,101 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ProyectoFILHA.Models;
 using ProyectoFILHA.Models.Entidades;
 using ProyectoFILHA.Models.Enums;
+using ProyectoFILHA.Services;
 
 public class PresentacionesController : Controller
 {
-    private readonly ApplicationDbContext _context;
+    private readonly PresentacionService _service;
 
-    public PresentacionesController(ApplicationDbContext context)
+    public PresentacionesController(
+        PresentacionService service)
     {
-        _context = context;
+        _service = service;
     }
 
-    // 🔎 LISTADO + FILTROS + PAGINACIÓN
-    public async Task<IActionResult> Index(string buscar, EstadoEnum? estado, int page = 1)
+    public async Task<IActionResult> Index(
+        string buscar,
+        EstadoEnum? estado,
+        int page = 1)
     {
         int pageSize = 10;
 
-        var query = _context.Presentaciones.AsQueryable();
+        var lista = await _service.ObtenerTodos();
 
         if (!string.IsNullOrEmpty(buscar))
         {
-            query = query.Where(p => p.Nombre.Contains(buscar));
+            lista = lista
+                .Where(x => x.Nombre != null &&
+                       x.Nombre.Contains(
+                           buscar,
+                           StringComparison.OrdinalIgnoreCase))
+                .ToList();
         }
 
         if (estado.HasValue)
         {
-            query = query.Where(p => p.Estado == estado);
+            lista = lista
+                .Where(x => x.Estado == estado.Value)
+                .ToList();
         }
 
-        int totalItems = await query.CountAsync();
+        int totalItems = lista.Count();
 
-        var lista = await query
-            .OrderBy(p => p.Id)
+        lista = lista
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .ToListAsync();
+            .ToList();
 
         ViewBag.CurrentPage = page;
-        ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
-
-        ViewBag.Buscar = buscar;
-        ViewBag.Estado = estado;
+        ViewBag.TotalPages =
+            (int)Math.Ceiling((double)totalItems / pageSize);
 
         return View(lista);
     }
 
-    // 🟢 CREATE
     public IActionResult Create()
     {
         return View();
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Presentacion presentacion)
+    public async Task<IActionResult> Create(
+        PresentacionViewModel model)
     {
-        if (ModelState.IsValid)
-        {
-            presentacion.FechaCreacion = DateTime.Now;
-            _context.Add(presentacion);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(presentacion);
+        if (!ModelState.IsValid)
+            return View(model);
+
+        await _service.Crear(model);
+
+        return RedirectToAction(nameof(Index));
     }
 
-    // ✏️ EDIT
     public async Task<IActionResult> Edit(int id)
     {
-        var presentacion = await _context.Presentaciones.FindAsync(id);
-        if (presentacion == null) return NotFound();
+        var model =
+            await _service.ObtenerPorId(id);
 
-        return View(presentacion);
+        return View(model);
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Presentacion presentacion)
+    public async Task<IActionResult> Edit(
+        int id,
+        PresentacionViewModel model)
     {
-        if (id != presentacion.Id) return NotFound();
+        if (!ModelState.IsValid)
+            return View(model);
 
-        var presentacionDb = await _context.Presentaciones.FindAsync(id);
-        if (presentacionDb == null) return NotFound();
+        await _service.Actualizar(id, model);
 
-        if (ModelState.IsValid)
-        {
-            presentacionDb.Nombre = presentacion.Nombre;
-            presentacionDb.Estado = presentacion.Estado;
-            // 🔒 NO tocar FechaCreacion
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        return View(presentacion);
+        return RedirectToAction(nameof(Index));
     }
 
-    // 🔍 DETAILS
     public async Task<IActionResult> Details(int id)
     {
-        var presentacion = await _context.Presentaciones.FindAsync(id);
-        if (presentacion == null) return NotFound();
+        var model =
+            await _service.ObtenerPorId(id);
 
-        return View(presentacion);
+        return View(model);
     }
 }

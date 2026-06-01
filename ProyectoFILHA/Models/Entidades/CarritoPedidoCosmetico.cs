@@ -16,6 +16,6 @@
         public Pedido? Pedido { get; set; }
 
         [ForeignKey("CosmeticoId")]
-        public Cosmetico? Cosmetico { get; set; }
+        public CosmeticoViewModel? Cosmetico { get; set; }
     }
 }

@@ -1,9 +1,11 @@
-﻿namespace ProyectoFILHA.Models.Entidades
-{
-    using ProyectoFILHA.Models.Enums;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+﻿using ProyectoFILHAAPI.Entidades.Enums;
+using ProyectoFILHAAPI.Entidades.ProyectoFILHA.API.Models.Entidades;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace ProyectoFILHAAPI.Entidades
+{
+    [Table("COSMETICO")]
     public class Cosmetico
     {
         public int Id { get; set; }
@@ -36,6 +38,6 @@
         public Categoria? Categoria { get; set; }
         public Presentacion? Presentacion { get; set; }
 
-        public List<CarritoPedidoCosmetico>? CarritoItems { get; set; }
+      //  public List<CarritoPedidoCosmetico>? CarritoItems { get; set; }
     }
 }

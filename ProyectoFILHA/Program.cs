@@ -1,19 +1,17 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ProyectoFILHA.Models;
+using ProyectoFILHA.Services;
 using ProyectoFILHA.Services.Interfaces;
 using System.Text;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Servicios
+// MVC
 builder.Services.AddControllersWithViews();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -37,70 +35,76 @@ builder.Services.AddSwaggerGen(c =>
                     Id = "Bearer"
                 }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
 });
 
-
-
+// Logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
-
-var ConectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(ConectionString));
-
-
-// Loggin Api
+// JWT
 var key = builder.Configuration["Jwt:Key"];
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
+if (!string.IsNullOrEmpty(key))
+{
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
         {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
-        };
-    });
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(key))
+            };
+        });
 
-builder.Services.AddAuthorization();
-builder.Services.AddScoped<ILogService, LogService>();
+    builder.Services.AddAuthorization();
+}
+
+// Servicios propios
+//builder.Services.AddScoped<ILogService, LogService>();
+
 builder.Services.AddHttpClient<ITriviaService, TriviaService>();
 builder.Services.AddHttpClient<IDragonBallService, DragonBallService>();
+
+// API FILHA
+builder.Services.AddHttpClient("API", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7206/");
+});
+
+// Servicios que consumen la API
+builder.Services.AddScoped<CategoriaService>();
+builder.Services.AddScoped<PresentacionService>();
+builder.Services.AddScoped<CosmeticoService>();
 
 var app = builder.Build();
 
 // Pipeline
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.UseAuthentication();
-    app.UseAuthorization();
-    app.UseMiddleware<LoggingMiddleware>();
-}
-else
+if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
 
-
-
-
-
 app.UseStaticFiles();
+
 app.UseHttpsRedirection();
+
 app.UseRouting();
+
+app.UseAuthentication();
+
 app.UseAuthorization();
-app.UseMiddleware<LoggingMiddleware>();
+
+//app.UseMiddleware<LoggingMiddleware>();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

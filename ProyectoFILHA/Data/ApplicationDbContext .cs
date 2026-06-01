@@ -12,9 +12,9 @@ namespace ProyectoFILHA.Models
         }
 
         // DbSets
-        public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<Presentacion> Presentaciones { get; set; }
-        public DbSet<Cosmetico> Cosmeticos { get; set; }
+        public DbSet<CategoriaViewModel> Categorias { get; set; }
+        public DbSet<PresentacionViewModel> Presentaciones { get; set; }
+        public DbSet<CosmeticoViewModel> Cosmeticos { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Domicilio> Domicilios { get; set; }
         public DbSet<MedioPago> MediosPago { get; set; }
@@ -52,7 +52,7 @@ namespace ProyectoFILHA.Models
                 .OnDelete(DeleteBehavior.NoAction);
 
            
-            modelBuilder.Entity<Cosmetico>()
+            modelBuilder.Entity<CosmeticoViewModel>()
                 .Property(c => c.Precio)
                 .HasPrecision(14, 2);
 
@@ -61,9 +61,9 @@ namespace ProyectoFILHA.Models
                 .HasPrecision(14, 2);
 
            
-            modelBuilder.Entity<Categoria>().ToTable("CATEGORIA");
-            modelBuilder.Entity<Presentacion>().ToTable("PRESENTACION");
-            modelBuilder.Entity<Cosmetico>().ToTable("COSMETICO");
+            modelBuilder.Entity<CategoriaViewModel>().ToTable("CATEGORIA");
+            modelBuilder.Entity<PresentacionViewModel>().ToTable("PRESENTACION");
+            modelBuilder.Entity<CosmeticoViewModel>().ToTable("COSMETICO");
             modelBuilder.Entity<Cliente>().ToTable("CLIENTE");
             modelBuilder.Entity<Domicilio>().ToTable("DOMICILIO");
             modelBuilder.Entity<MedioPago>().ToTable("MEDIO_PAGO");
