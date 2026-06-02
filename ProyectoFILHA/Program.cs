@@ -77,7 +77,7 @@ builder.Services.AddHttpClient<IDragonBallService, DragonBallService>();
 // API FILHA
 builder.Services.AddHttpClient("API", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7206/");
+    client.BaseAddress = new Uri("https://proyectoapiilha-fddef0avhmbjdzdv.mexicocentral-01.azurewebsites.net/");
 });
 
 // Servicios que consumen la API

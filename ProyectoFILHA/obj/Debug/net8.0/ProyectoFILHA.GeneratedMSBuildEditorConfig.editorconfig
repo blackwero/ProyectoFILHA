@@ -17,104 +17,103 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.TargetFrameworkIdentifier = .NETCoreApp
 build_property.TargetFrameworkVersion = v8.0
-build_property.EntryPointFilePath = 
 build_property.RootNamespace = ProyectoFILHA
 build_property.RootNamespace = ProyectoFILHA
-build_property.ProjectDir = C:\Users\LudoCorrupted\source\repos\ProyectoFinal\ProyectoFILHA\ProyectoFILHA\
+build_property.ProjectDir = E:\Users\10045872\source\repos\blackwero\ProyectoFILHA\ProyectoFILHA\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\LudoCorrupted\source\repos\ProyectoFinal\ProyectoFILHA\ProyectoFILHA
+build_property.MSBuildProjectDirectory = E:\Users\10045872\source\repos\blackwero\ProyectoFILHA\ProyectoFILHA
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Admin/Index.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Categorias/Create.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Categorias/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Categorias/Details.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Categorias/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Categorias/Edit.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Categorias/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Categorias/Index.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Categorias/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Clientes/CrearCuenta.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Clientes/CrearCuenta.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcQ3JlYXJDdWVudGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Clientes/Entrar.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Clientes/Entrar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcRW50cmFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Clientes/Index.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Clientes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Cosmeticos/AdminIndex.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Cosmeticos/AdminIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29zbWV0aWNvc1xBZG1pbkluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Cosmeticos/Create.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Cosmeticos/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29zbWV0aWNvc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Cosmeticos/Edit.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Cosmeticos/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29zbWV0aWNvc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Home/Index.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Home/Privacy.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Presentaciones/Create.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Presentaciones/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlc2VudGFjaW9uZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Presentaciones/Details.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Presentaciones/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlc2VudGFjaW9uZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Presentaciones/Edit.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Presentaciones/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlc2VudGFjaW9uZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Presentaciones/Index.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Presentaciones/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlc2VudGFjaW9uZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Shared/Error.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Shared/_ValidationScriptsPartial.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/_ViewImports.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/_ViewStart.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LudoCorrupted/source/repos/ProyectoFinal/ProyectoFILHA/ProyectoFILHA/Views/Shared/_Layout.cshtml]
+[E:/Users/10045872/source/repos/blackwero/ProyectoFILHA/ProyectoFILHA/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-ddsw4beew0
