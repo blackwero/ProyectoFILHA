@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProyectoFILHAMAUI.Views.LoginPage"
+             Title="Iniciar sesión"
+             BackgroundColor="#F5F5F7">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="28,40,28,20" Spacing="20">
+
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Bienvenido" FontSize="28" FontAttributes="Bold" TextColor="#1A1A1A" />
+                <Label Text="Inicia sesión para continuar" FontSize="14" TextColor="#888888" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Correo" FontSize="13" TextColor="#666666" />
+                <Border StrokeShape="RoundRectangle 12" Stroke="#E0E0E0" BackgroundColor="White">
+                    <Entry Text="{Binding Correo}" Placeholder="tucorreo@ejemplo.com"
+                           Keyboard="Email" Margin="10,2" />
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Contraseña" FontSize="13" TextColor="#666666" />
+                <Border StrokeShape="RoundRectangle 12" Stroke="#E0E0E0" BackgroundColor="White">
+                    <Entry Text="{Binding Password}" Placeholder="••••••••"
+                           IsPassword="True" Margin="10,2" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Error -->
+            <Label Text="{Binding MensajeError}" TextColor="#D64545" FontSize="13"
+                   IsVisible="{Binding TieneError}" />
+
+            <Button Text="Ingresar" Command="{Binding LoginCommand}"
+                    BackgroundColor="#6B4EFF" TextColor="White"
+                    CornerRadius="24" HeightRequest="52" FontAttributes="Bold"
+                    IsEnabled="{Binding Cargando, Converter={StaticResource InverseBoolConverter}}" />
+
+            <ActivityIndicator IsRunning="{Binding Cargando}" IsVisible="{Binding Cargando}"
+                                Color="#6B4EFF" HorizontalOptions="Center" />
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="4" Margin="0,12,0,0">
+                <Label Text="¿No tienes cuenta?" FontSize="14" TextColor="#666666" />
+                <Label Text="Regístrate" FontSize="14" TextColor="#6B4EFF" FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IrARegistroCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

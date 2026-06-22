@@ -18,9 +18,17 @@ namespace ProyectoFILHAMAUI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // Registros: deben vivir SIEMPRE, no solo en Debug
             builder.Services.AddSingleton(sp => new CosmeticoApiService(
                 new HttpClient { BaseAddress = new Uri(ApiConfig.BaseUrl) }));
+
+            builder.Services.AddSingleton(sp => new AuthApiService(
+                new HttpClient { BaseAddress = new Uri(ApiConfig.BaseUrl) }));
+
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<LoginPage>();
+
+            builder.Services.AddTransient<RegistroViewModel>();
+            builder.Services.AddTransient<RegistroPage>();
 
             builder.Services.AddTransient<CatalogoViewModel>();
             builder.Services.AddTransient<CatalogoPage>();

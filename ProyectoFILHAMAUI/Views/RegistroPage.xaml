@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProyectoFILHAMAUI.Views.RegistroPage"
+             Title="Crear cuenta"
+             BackgroundColor="#F5F5F7">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="28,30,28,30" Spacing="16">
+
+            <VerticalStackLayout Spacing="4" Margin="0,0,0,8">
+                <Label Text="Crear cuenta" FontSize="26" FontAttributes="Bold" TextColor="#1A1A1A" />
+                <Label Text="Completa tus datos para registrarte" FontSize="14" TextColor="#888888" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Nombre completo" FontSize="13" TextColor="#666666" />
+                <Border StrokeShape="RoundRectangle 12" Stroke="#E0E0E0" BackgroundColor="White">
+                    <Entry Text="{Binding Nombre}" Placeholder="Tu nombre" Margin="10,2" />
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Correo" FontSize="13" TextColor="#666666" />
+                <Border StrokeShape="RoundRectangle 12" Stroke="#E0E0E0" BackgroundColor="White">
+                    <Entry Text="{Binding Correo}" Placeholder="tucorreo@ejemplo.com"
+                           Keyboard="Email" Margin="10,2" />
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Teléfono" FontSize="13" TextColor="#666666" />
+                <Border StrokeShape="RoundRectangle 12" Stroke="#E0E0E0" BackgroundColor="White">
+                    <Entry Text="{Binding Telefono}" Placeholder="10 dígitos"
+                           Keyboard="Telephone" Margin="10,2" />
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Fecha de nacimiento" FontSize="13" TextColor="#666666" />
+                <Border StrokeShape="RoundRectangle 12" Stroke="#E0E0E0" BackgroundColor="White">
+                    <DatePicker Date="{Binding FechaNacimiento}" Margin="10,2" />
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Contraseña" FontSize="13" TextColor="#666666" />
+                <Border StrokeShape="RoundRectangle 12" Stroke="#E0E0E0" BackgroundColor="White">
+                    <Entry Text="{Binding Password}" Placeholder="Mínimo 6 caracteres"
+                           IsPassword="True" Margin="10,2" />
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Confirmar contraseña" FontSize="13" TextColor="#666666" />
+                <Border StrokeShape="RoundRectangle 12" Stroke="#E0E0E0" BackgroundColor="White">
+                    <Entry Text="{Binding ConfirmarPassword}" Placeholder="Repite tu contraseña"
+                           IsPassword="True" Margin="10,2" />
+                </Border>
+            </VerticalStackLayout>
+
+            <Label Text="{Binding MensajeError}" TextColor="#D64545" FontSize="13"
+                   IsVisible="{Binding TieneError}" />
+
+            <Button Text="Crear cuenta" Command="{Binding RegistrarCommand}"
+                    BackgroundColor="#6B4EFF" TextColor="White"
+                    CornerRadius="24" HeightRequest="52" FontAttributes="Bold"
+                    IsEnabled="{Binding Cargando, Converter={StaticResource InverseBoolConverter}}"
+                    Margin="0,8,0,0" />
+
+            <ActivityIndicator IsRunning="{Binding Cargando}" IsVisible="{Binding Cargando}"
+                                Color="#6B4EFF" HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

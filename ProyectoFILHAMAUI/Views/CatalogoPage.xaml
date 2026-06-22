@@ -8,10 +8,20 @@
     <Grid RowDefinitions="Auto,Auto,*">
 
         <!-- Encabezado -->
-        <VerticalStackLayout Grid.Row="0" Padding="20,16,20,4" Spacing="2">
-            <Label Text="Catálogo" FontSize="26" FontAttributes="Bold" TextColor="#1A1A1A" />
-            <Label Text="Encuentra tu producto favorito" FontSize="13" TextColor="#888888" />
-        </VerticalStackLayout>
+        <Grid Grid.Row="0" Padding="20,16,20,4" ColumnDefinitions="*,Auto">
+            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                <Label Text="Catálogo" FontSize="26" FontAttributes="Bold" TextColor="#1A1A1A" />
+                <Label Text="Encuentra tu producto favorito" FontSize="13" TextColor="#888888" />
+            </VerticalStackLayout>
+
+            <Border Grid.Column="1" BackgroundColor="#EDEAFB" StrokeShape="RoundRectangle 20"
+            Stroke="Transparent" HeightRequest="40" WidthRequest="40" VerticalOptions="Start">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCuentaTapped" />
+                </Border.GestureRecognizers>
+                <Label Text="👤" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+        </Grid>
 
         <!-- Chips de categoría -->
         <CollectionView Grid.Row="1"
