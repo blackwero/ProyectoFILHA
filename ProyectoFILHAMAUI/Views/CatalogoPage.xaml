@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProyectoFILHAMAUI.Views.CatalogoPage"
+             Title="Catálogo"
+             BackgroundColor="#F5F5F7">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- Encabezado -->
+        <VerticalStackLayout Grid.Row="0" Padding="20,16,20,4" Spacing="2">
+            <Label Text="Catálogo" FontSize="26" FontAttributes="Bold" TextColor="#1A1A1A" />
+            <Label Text="Encuentra tu producto favorito" FontSize="13" TextColor="#888888" />
+        </VerticalStackLayout>
+
+        <!-- Chips de categoría -->
+        <CollectionView Grid.Row="1"
+                         ItemsSource="{Binding Categorias}"
+                         ItemsLayout="HorizontalList"
+                         HeightRequest="46"
+                         Margin="16,4,0,4">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,0,8,0" Padding="16,8"
+                            StrokeShape="RoundRectangle 20"
+                            BackgroundColor="#EDEAFB" Stroke="#EDEAFB">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SeleccionarCommand}" />
+                        </Border.GestureRecognizers>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="BackgroundColor" Value="#6B4EFF" />
+                                <Setter Property="Stroke" Value="#6B4EFF" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Label Text="{Binding Nombre}" FontSize="13" TextColor="#6B4EFF" VerticalOptions="Center">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                    <Setter Property="TextColor" Value="White" />
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Contenido (lista + estados superpuestos) -->
+        <Grid Grid.Row="2">
+
+            <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefrescarCommand}">
+                <CollectionView ItemsSource="{Binding Productos}"
+                                 ItemsLayout="VerticalGrid, 2"
+                                 Margin="12,4">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="6" Padding="14" StrokeShape="RoundRectangle 16"
+                                    BackgroundColor="White" Stroke="Transparent">
+                                <Border.Shadow>
+                                    <Shadow Brush="Black" Opacity="0.08" Radius="12" Offset="0,4" />
+                                </Border.Shadow>
+                                <VerticalStackLayout Spacing="6">
+                                    <Border BackgroundColor="#F0F0F3" StrokeShape="RoundRectangle 12"
+                                            HeightRequest="90" Stroke="Transparent">
+                                        <Label Text="🧴" FontSize="32" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="{Binding Nombre}" FontAttributes="Bold" FontSize="15" LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding Categoria.Nombre}" FontSize="12" TextColor="#999999" />
+                                    <Label Text="{Binding Precio, StringFormat='${0:N2}'}" FontSize="16" TextColor="#6B4EFF" FontAttributes="Bold" />
+                                    <Label Text="{Binding CantDisponible, StringFormat='Disponibles: {0}'}" FontSize="11" TextColor="#AAAAAA" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
+            <!-- Carga inicial -->
+            <ActivityIndicator IsRunning="{Binding Cargando}" IsVisible="{Binding Cargando}"
+                                Color="#6B4EFF" HorizontalOptions="Center" VerticalOptions="Center" />
+
+            <!-- Error -->
+            <VerticalStackLayout IsVisible="{Binding TieneError}"
+                                  HorizontalOptions="Center" VerticalOptions="Center"
+                                  Spacing="12" Padding="40">
+                <Label Text="⚠️" FontSize="40" HorizontalOptions="Center" />
+                <Label Text="{Binding MensajeError}" FontSize="14" TextColor="#666666"
+                       HorizontalTextAlignment="Center" />
+                <Button Text="Reintentar" Command="{Binding ReintentarCommand}"
+                        BackgroundColor="#6B4EFF" TextColor="White"
+                        CornerRadius="20" Padding="24,10" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Vacío -->
+            <VerticalStackLayout IsVisible="{Binding MostrarVacio}"
+                                  HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                <Label Text="🔍" FontSize="36" HorizontalOptions="Center" />
+                <Label Text="No hay productos en esta categoría" FontSize="14" TextColor="#999999" />
+            </VerticalStackLayout>
+
+        </Grid>
+    </Grid>
+</ContentPage>
