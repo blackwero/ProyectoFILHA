@@ -24,6 +24,7 @@ namespace ProyectoFILHAMAUI
 
             builder.Services.AddTransient<CatalogoViewModel>();
             builder.Services.AddTransient<CatalogoPage>();
+            builder.Services.AddTransient<DetalleProductoPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();

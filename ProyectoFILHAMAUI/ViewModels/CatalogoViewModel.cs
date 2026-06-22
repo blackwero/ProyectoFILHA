@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using ProyectoFILHAMAUI.Models;
 using ProyectoFILHAMAUI.Services;
+using ProyectoFILHAMAUI.Views;
 
 namespace ProyectoFILHAMAUI.ViewModels
 {
@@ -50,12 +51,24 @@ namespace ProyectoFILHAMAUI.ViewModels
 
         public ICommand RefrescarCommand { get; }
         public ICommand ReintentarCommand { get; }
+        public ICommand VerDetalleCommand { get; }
 
         public CatalogoViewModel(CosmeticoApiService apiService)
         {
             _apiService = apiService;
+
             RefrescarCommand = new Command(async () => await CargarProductosAsync(esRefresh: true));
             ReintentarCommand = new Command(async () => await CargarProductosAsync());
+
+            VerDetalleCommand = new Command<Cosmetico>(async (producto) =>
+            {
+                if (producto == null) return;
+
+                await Shell.Current.GoToAsync(nameof(DetalleProductoPage), new Dictionary<string, object>
+                {
+                    { "Producto", producto }
+                });
+            });
         }
 
         public async Task CargarProductosAsync(bool esRefresh = false)

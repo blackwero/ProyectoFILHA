@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProyectoFILHAMAUI.Views.DetalleProductoPage"
+             Title="Detalle"
+             BackgroundColor="#F5F5F7">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="0,0,0,24" Spacing="16">
+
+            <!-- Imagen / placeholder -->
+            <Border BackgroundColor="#F0F0F3" HeightRequest="240" Stroke="Transparent">
+                <Label Text="🧴" FontSize="80" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+
+            <VerticalStackLayout Padding="20,4" Spacing="14">
+
+                <!-- Categoría -->
+                <Label Text="{Binding Categoria.Nombre}" FontSize="13" TextColor="#6B4EFF" FontAttributes="Bold" />
+
+                <!-- Nombre -->
+                <Label Text="{Binding Nombre}" FontSize="24" FontAttributes="Bold" TextColor="#1A1A1A" />
+
+                <!-- Precio -->
+                <Label Text="{Binding Precio, StringFormat='${0:N2}'}" FontSize="26" TextColor="#1A1A1A" FontAttributes="Bold" />
+
+                <!-- Badges -->
+                <HorizontalStackLayout Spacing="8">
+                    <Border BackgroundColor="#EAF7EE" StrokeShape="RoundRectangle 14" Padding="12,6" Stroke="Transparent"
+                            IsVisible="{Binding EsVegano}">
+                        <Label Text="🌱 Vegano" FontSize="12" TextColor="#2E8B57" />
+                    </Border>
+                    <Border BackgroundColor="#EAF1FB" StrokeShape="RoundRectangle 14" Padding="12,6" Stroke="Transparent"
+                            IsVisible="{Binding EsDermatologico}">
+                        <Label Text="🧪 Dermatológico" FontSize="12" TextColor="#3567A6" />
+                    </Border>
+                </HorizontalStackLayout>
+
+                <!-- Presentación -->
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Presentación" FontSize="13" TextColor="#999999" />
+                    <Label Text="{Binding Presentacion.Nombre}" FontSize="15" TextColor="#1A1A1A" />
+                </VerticalStackLayout>
+
+                <!-- Disponibilidad -->
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Disponibilidad" FontSize="13" TextColor="#999999" />
+                    <Label Text="{Binding CantDisponible, StringFormat='{0} unidades disponibles'}" FontSize="15" TextColor="#1A1A1A" />
+                </VerticalStackLayout>
+
+                <!-- Descripción -->
+                <VerticalStackLayout Spacing="4" IsVisible="{Binding Descripcion, Converter={StaticResource StringNotEmptyConverter}}">
+                    <Label Text="Descripción" FontSize="13" TextColor="#999999" />
+                    <Label Text="{Binding Descripcion}" FontSize="14" TextColor="#444444" LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+
+                <!-- Botón agregar al carrito -->
+                <Button Text="Agregar al carrito"
+                        Clicked="OnAgregarAlCarritoClicked"
+                        BackgroundColor="#6B4EFF" TextColor="White"
+                        CornerRadius="24" HeightRequest="52" FontSize="16" FontAttributes="Bold"
+                        Margin="0,16,0,0" />
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

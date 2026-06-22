@@ -57,6 +57,9 @@
                         <DataTemplate>
                             <Border Margin="6" Padding="14" StrokeShape="RoundRectangle 16"
                                     BackgroundColor="White" Stroke="Transparent">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnProductoTapped" />
+                                </Border.GestureRecognizers>
                                 <Border.Shadow>
                                     <Shadow Brush="Black" Opacity="0.08" Radius="12" Offset="0,4" />
                                 </Border.Shadow>
