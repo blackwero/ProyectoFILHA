@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using ProyectoFILHMAUI.ViewModels;
+using ProyectoFILHMAUI.Views;
 using Syncfusion.Maui.Toolkit.Hosting;
 
 namespace ProyectoFILHMAUI
@@ -32,18 +34,11 @@ namespace ProyectoFILHMAUI
     		builder.Services.AddLogging(configure => configure.AddDebug());
 #endif
 
-            builder.Services.AddSingleton<ProjectRepository>();
-            builder.Services.AddSingleton<TaskRepository>();
-            builder.Services.AddSingleton<CategoryRepository>();
-            builder.Services.AddSingleton<TagRepository>();
-            builder.Services.AddSingleton<SeedDataService>();
-            builder.Services.AddSingleton<ModalErrorHandler>();
-            builder.Services.AddSingleton<MainPageModel>();
-            builder.Services.AddSingleton<ProjectListPageModel>();
-            builder.Services.AddSingleton<ManageMetaPageModel>();
+            builder.Services.AddSingleton(sp => new CosmeticoApiService(
+        new HttpClient { BaseAddress = new Uri(ApiConfig.BaseUrl) }));
 
-            builder.Services.AddTransientWithShellRoute<ProjectDetailPage, ProjectDetailPageModel>("project");
-            builder.Services.AddTransientWithShellRoute<TaskDetailPage, TaskDetailPageModel>("task");
+            builder.Services.AddTransient<CatalogoViewModel>();
+            builder.Services.AddTransient<CatalogoPage>();
 
             return builder.Build();
         }

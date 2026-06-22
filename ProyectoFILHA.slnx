@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="ProyectoFILHA/ProyectoFILHA.csproj" />
   <Project Path="ProyectoFILHAAPI/ProyectoFILHAAPI.csproj" Id="39efaa42-bece-4cf7-9378-57a5e8363a54" />
-  <Project Path="ProyectoFILHMAUI/ProyectoFILHMAUI.csproj" Id="7dee0c43-094b-482e-9ffd-5942b75960d2" />
+  <Project Path="ProyectoFILHAMAUI/ProyectoFILHAMAUI.csproj" Id="48379f9d-277e-4604-b52d-37208270eb97" />
 </Solution>
