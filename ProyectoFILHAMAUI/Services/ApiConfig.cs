@@ -9,6 +9,6 @@ namespace ProyectoFILHAMAUI.Services
     public static class ApiConfig
     {
         public static string BaseUrl =>
-            "https://proyectoapiilha-fddef0avhmbjdzdv.mexicocentral-01.azurewebsites.net/";
+            "https://proyectoirving-api-gcg9bfcheda9g9ba.mexicocentral-01.azurewebsites.net/";
     }
 }
